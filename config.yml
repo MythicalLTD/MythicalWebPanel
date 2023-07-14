@@ -1,0 +1,10 @@
+app:
+  debug: true # Puts the application into debug mode
+  silent_debug: true # Hides the debug message
+
+database:
+  host: 127.0.0.1
+  port: 3306
+  username: MythicalSystems
+  password: '<password>'
+  database: mythicalwebpanel

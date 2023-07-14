@@ -15,5 +15,10 @@
             "homepage": "https://github.com/snyderwillcode",
             "role": "Developer"
         }
-    ]
+    ],
+    "require": {
+        "ecoal95/php-router": "^1.0",
+        "symfony/yaml": "^6.3",
+        "symfony/config": "^6.3"
+    }
 }
