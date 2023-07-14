@@ -1,6 +1,6 @@
 {
-    "name": "atorotech/atoroweb",
-    "description": "A Customisable Resource Sharing Client Area for webhosting",
+    "name": "mythicalsystems/mythicalwebpanel",
+    "description": "The best free web hosting panel with multi-node support and a powerful API",
     "license": "MIT",
     "authors": [
         {
@@ -15,9 +15,5 @@
             "homepage": "https://github.com/snyderwillcode",
             "role": "Developer"
         }
-    ],
-    "require": {
-        "vlucas/phpdotenv": "^5.5",
-        "guzzlehttp/guzzle": "^7.5"
-    }
+    ]
 }
