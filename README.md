@@ -23,5 +23,4 @@ https://paypal.me/mythicalsystems
 
 You can join our support server:
 
-https://dsc.gg/atorotech
-
+https://discord.gg/7BZTmSK2D8
