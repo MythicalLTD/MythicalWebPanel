@@ -10,6 +10,17 @@ $router->add('/', function() {
     require("../include/main.php");
     require("../view/index.php");
 });
-$router->route();
+$router->add('/auth/login', function() {
+    require("../include/main.php");
+    require("../view/auth/login.php");
+});
+$router->add("/(.*)", function() {
+    require("../include/main.php");
+    require("../view/errors/404.php");
+});
+$router->add("/e/critical", function() {;
+    require("../view/errors/critical.php");
+});
 
+$router->route();
 ?>

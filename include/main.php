@@ -24,8 +24,13 @@ else
 }
 //DATABASE CONNECTION
 include('dbconn.php');
+//SETTINGS TABLE
+include('settings.php');
 //GET USER REAL IP
 include('../functions/getclientip.php');
 $ip_address = getclientip();    
-
+//APP URL
+$prot = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$svhost = $_SERVER['HTTP_HOST'];
+$appURL = $prot . '://' . $svhost;
 ?>
