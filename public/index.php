@@ -31,6 +31,12 @@ $router->add('/help-center/pp', function() {
     require("../view/legal/privacypolicy.php");
 });
 
+$router->add('/help-center', function() {
+    require("../include/main.php");
+    require("../view/help-center.php");
+});
+
+
 $router->add('/auth/logout', function() {
     require("../include/main.php");
     require("../functions/logout.php");
