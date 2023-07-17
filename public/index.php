@@ -16,6 +16,21 @@ $router->add('/auth/login', function() {
     require("../view/auth/login.php");
 });
 
+$router->add('/dashboard', function() {
+    require("../include/main.php");
+    require("../view/dashboard.php");
+});
+
+$router->add('/help-center/tos', function() {
+    require("../include/main.php");
+    require("../view/legal/termsofservice.php");
+});
+
+$router->add('/help-center/pp', function() {
+    require("../include/main.php");
+    require("../view/legal/privacypolicy.php");
+});
+
 $router->add('/auth/logout', function() {
     require("../include/main.php");
     require("../functions/logout.php");

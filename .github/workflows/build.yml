@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  PHP_VERSION: '8.x'  
+  PHP_VERSION: '8.2'  
 
 permissions:
   contents: read

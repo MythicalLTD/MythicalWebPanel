@@ -17,7 +17,7 @@ http_response_code(404);
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-    <?php include(__DIR__ . '/../components/head.php'); ?>
+    <?php include(__DIR__ . '/../requirements/head.php'); ?>
     <link rel="stylesheet" href="<?= $appURL?>/assets/vendor/css/pages/page-misc.css" />
     <title><?= $settings['name']?> | Not found</title>
 
@@ -50,7 +50,7 @@ http_response_code(404);
         data-app-dark-img="illustrations/bg-shape-image-dark.png"
       />
     </div>
-    <?php include(__DIR__ . '/../components/footer.php'); ?>
+    <?php include(__DIR__ . '/../requirements/footer.php'); ?>
   </body>
 </html>
 

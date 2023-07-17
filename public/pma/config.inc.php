@@ -113,7 +113,7 @@ $cfg['SaveDir'] = '';
  * uncomment the desired line:
  * default = 'en'
  */
-//$cfg['DefaultLang'] = 'en';
+$cfg['DefaultLang'] = 'en';
 //$cfg['DefaultLang'] = 'de';
 
 /**
@@ -130,13 +130,13 @@ $cfg['SaveDir'] = '';
  * This requires configuration storage enabled, see above.
  * default = false
  */
-//$cfg['QueryHistoryDB'] = true;
+$cfg['QueryHistoryDB'] = true;
 
 /**
  * When using DB-based query history, how many entries should be kept?
  * default = 25
  */
-//$cfg['QueryHistoryMax'] = 100;
+$cfg['QueryHistoryMax'] = 255;
 
 /**
  * Whether or not to query the user before sending the error report to

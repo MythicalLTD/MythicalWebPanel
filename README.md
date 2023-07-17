@@ -7,10 +7,10 @@ The best free web hosting panel with multi-node support and a powerful API
 MythicalWebPanel is currently in development by [@SnyderWillCode](https://github.com/SnyderWillCode) & [@NaysKutzu](https://github.com/nayskutzu).
 
 ### 🎨 Frontend
-We are using argon free as a frontend. You can change that! Read the documentation to learn more.
+We are using vuexy as a frontend. You can change that!
 
 ### 👔 Contributing
-I'm open to all contributions! Feel free to help! :)
+I'm open to all contributions! Feel free to help! :) 
 
 ### 💸 Financial support
 Do you want to support our hard work?

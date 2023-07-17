@@ -9,8 +9,8 @@ function writeLog($type, $log, $conn)
         if ($log == "") {
             $query = "INSERT INTO mythicalwebpanel_logs (log, type) VALUES ('Server sent blank value to logs', 'error')";
         } else {
-            $w_log2 = '[' . $ip_address . '] ' . $log;
-            $query = "INSERT INTO mythicalwebpanel_logs (log, type) VALUES ('$w_log2', '$type')";
+            $w_log = '[' . $ip_address . '] ' . $log;
+            $query = "INSERT INTO mythicalwebpanel_logs (log, type) VALUES ('$w_log', '$type')";
             $conn->query($query);
             $conn->close();
         }

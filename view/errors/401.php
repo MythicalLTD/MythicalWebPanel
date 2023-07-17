@@ -15,7 +15,7 @@ http_response_code(401);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
   <title><?= $settings['name']?> | Not Authorized</title>
-  <?php include(__DIR__ . '/../components/head.php'); ?>
+  <?php include(__DIR__ . '/../requirements/head.php'); ?>
   <link rel="stylesheet" href="<?= $appURL?>/assets/vendor/css/pages/page-misc.css" />
 </head>
 <body>
@@ -45,6 +45,6 @@ http_response_code(401);
       data-app-dark-img="illustrations/bg-shape-image-dark.png"
     />
   </div>
-  <?php include(__DIR__ . '/../components/footer.php'); ?>
+  <?php include(__DIR__ . '/../requirements/footer.php'); ?>
 </body>
 </html>

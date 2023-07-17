@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   data-assets-path="<?= $appURL ?>/assets/" data-template="horizontal-menu-template">
 
 <head>
-  <?php include(__DIR__ . '/../components/head.php'); ?>
+  <?php include(__DIR__ . '/../requirements/head.php'); ?>
   <link rel="stylesheet" href="<?= $appURL ?>/assets/vendor/css/pages/page-auth.css" />
   <title>
     <?= $settings['name'] ?> | Login
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
   </div>
-  <?php include(__DIR__ . '/../components/footer.php'); ?>
+  <?php include(__DIR__ . '/../requirements/footer.php'); ?>
   <script src="<?= $appURL ?>/assets/js/pages-auth.js"></script>
 </body>
 

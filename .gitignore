@@ -1,5 +1,6 @@
 .vscode/
 .alcache/
+.mythicalide/
 .env
 core/storage/*
 /vendor
