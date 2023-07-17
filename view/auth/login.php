@@ -1,10 +1,11 @@
-<?php 
+<?php
 include('../include/php-csrf.php');
 session_start();
 $csrf = new CSRF();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-   if ($csrf->validate('my-form')) {
-    if (!$settings['reCAPTCHA_sitekey'] == "disabled" || $settings['reCAPTCHA_secretkey'] == "disabled") {
+  if ($csrf->validate('login-form')) {
+    if (!$settings['reCAPTCHA_sitekey'] == "") {
+      // CAPTCHA verification only if reCAPTCHA is enabled
       $response = $_POST["g-recaptcha-response"];
       $url = 'https://www.google.com/recaptcha/api/siteverify';
       $data = array(
@@ -21,111 +22,156 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $context = stream_context_create($options);
       $verify = file_get_contents($url, false, $context);
       $captcha_success = json_decode($verify);
-      
+
       if ($captcha_success->success == false) {
-        writeLog("auth","Faild to login: 'reCAPTCHA faild'",$conn);
+        writeLog("auth", "Failed to login: 'reCAPTCHA failed'", $conn);
         echo "<center><div class='return' style='background-color:red'>CAPTCHA Failed. <a href='/auth/login' style='color:white;'>Click to retry</a></div></center>";
-      }
-      else if ($captcha_success->success==true) {
-        if (isset($_POST['login'])) {
-              $username = mysqli_real_escape_string($conn, $_POST['username']);
-              $password = mysqli_real_escape_string($conn, $_POST['password']);
-              $query = "SELECT * FROM mcstaffx_users WHERE username = '$username'";
-              $result = mysqli_query($conn, $query);
-              if ($result) {
-                  if (mysqli_num_rows($result) == 1) {
-                      $row = mysqli_fetch_assoc($result);
-                      $hashedPassword = $row['password'];
-                      if (password_verify($password, $hashedPassword)) {
-                          $token = $row['token'];
-                          $username = $row['username'];
-                          $cookie_name = 'token';
-                          $cookie_value = $token;
-                          setcookie($cookie_name, $cookie_value, time() + (10 * 365 * 24 * 60 * 60), '/');
-                          writeLog('auth', "The user ($username) logged in.",$conn);
-                          header('location: /dashboard');
-                      } else {
-                          writeLog("auth","Faild to login: 'Invalid Password'",$conn);
-                          header('location: /auth/login?error=Invalid Password');
-                      }
-                  } else {
-                      echo "Invalid username";
-                      writeLog("auth","Faild to login: 'Invalid username'",$conn);
-                      header('location: /auth/login?error=Invalid username');
-                  }
-              } else {
-                  writeLog("error", "Faild to log user in",$conn);
-                  header('location: /auth/login?error=Faild to log user in');
-              }
-              mysqli_free_result($result);
-              $conn->close();
-           }
-        }
-        else {
-         setcookie('api_key', '', time() - (10 * 365 * 24 * 60 * 60 * 2), '/');
-         setcookie('phpsessid', '',time() - (10 * 365 * 24 * 60 * 60 * 2), '/');
-         writeLog("error", "Faild to log user in: 'CSRF Verfication Faild'",$conn);
-         header('location: /auth/login?error=CSRF Verfication Faild');
-        }
+        exit; // Stop execution if CAPTCHA fails
       }
     }
-      
+
+    // Rest of the login code
+    if (isset($_POST['login'])) {
+      $email = mysqli_real_escape_string($conn, $_POST['email']);
+      $password = mysqli_real_escape_string($conn, $_POST['password']);
+      if (!$email == "" || !$password == "") {
+        $query = "SELECT * FROM mythicalwebpanel_users WHERE email = '$email'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+          if (mysqli_num_rows($result) == 1) {
+            $row = mysqli_fetch_assoc($result);
+            $hashedPassword = $row['password'];
+            if (password_verify($password, $hashedPassword)) {
+              $token = $row['token'];
+              $email = $row['email'];
+              $cookie_name = 'token';
+              $cookie_value = $token;
+              setcookie($cookie_name, $cookie_value, time() + (10 * 365 * 24 * 60 * 60), '/');
+              writeLog('auth', "The user ($email) logged in.", $conn);
+              header('location: /dashboard');
+              exit; // Stop execution after successful login
+            } else {
+              writeLog("auth", "Failed to login: 'Invalid Password'", $conn);
+              header('location: /auth/login?error=Invalid Password');
+              exit; // Stop execution if password is invalid
+            }
+          } else {
+            writeLog("auth", "Failed to login: 'Invalid email'", $conn);
+            header('location: /auth/login?error=Invalid email');
+            exit; // Stop execution if email is invalid
+          }
+        } else {
+          writeLog("error", "Failed to log user in", $conn);
+          header('location: /auth/login?error=Failed to log user in');
+          exit; // Stop execution if login fails
+        }
+        mysqli_free_result($result);
+        $conn->close();
+      }
+    } else {
+      writeLog("error", "Failed to log user in: 'Login failed'", $conn);
+      header('location: /auth/login?error=Login failed');
+      exit; // Stop execution if login button is not pressed
+    }
+  } else {
+    // CSRF validation failed
+    setcookie('api_key', '', time() - (10 * 365 * 24 * 60 * 60 * 2), '/');
+    setcookie('phpsessid', '', time() - (10 * 365 * 24 * 60 * 60 * 2), '/');
+    writeLog("error", "Failed to log user in: 'CSRF Verification Failed'", $conn);
+    header('location: /auth/login?error=CSRF Verification Failed');
+    exit; // Stop execution if CSRF validation fails
+  }
 }
-
 ?>
-<html lang="en" data-lt-installed="true">
-   <head>
-    <?php include(__DIR__.'/../components/head.php');?>
-    <title><?= $settings['name'] ?> | Login</title>
-   </head>
-<body>
-    <div class="container-scroller">
-      <div class="container-fluid page-body-wrapper full-page-wrapper">
-        <div class="row w-100 m-0">
-          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
-            <div class="card col-lg-4 mx-auto">
-              <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3"><?= $lang['app_login']?></h3>
-                <form method="post">
-                  <div class="form-group">
-                    <label><?= $lang['login_username']?></label>
-                    <input type="text" name="username" class="form-control p_input">
-                  </div>
-                  <div class="form-group">
-                    <label><?= $lang['login_password']?></label>
-                    <input type="password" name="password" class="form-control p_input">
-                  </div>
-                  <?php 
-                  if (!$settings['reCAPTCHA_sitekey'] == "" || $settings['reCAPTCHA_secretkey'] == "") {
-                    ?>
-                    <center><div class="g-recaptcha" data-sitekey="<?= $settings['reCAPTCHA_sitekey']?>"></div><center>
-                    <?php
-                  }
-                  ?>
-                  &nbsp;
-                  <div class="text-center">
-                    <button type="submit" name="login" class="btn btn-primary btn-block enter-btn"><?= $lang['app_login']?></button>
-                  </div>
-                  <?=$csrf->input('my-form');?>
-                  <p class="sign-up"><?= $lang['login_staffjoin']?><a href="#"> <?= $lang['app_applystaff']?> </a></p>
-                </form>
-                <?php 
-                if (isset($_GET['error'])) {
-                  ?>
-                     <div class="alert alert-danger" role="alert"> <?= $_GET['error']?> </div>
-                  <?php
-                }
-                else
-                { 
+<html lang="en" class="dark-style customizer-hide" dir="ltr" data-theme="theme-default"
+  data-assets-path="<?= $appURL ?>/assets/" data-template="horizontal-menu-template">
 
-                }
-                ?>
+<head>
+  <?php include(__DIR__ . '/../components/head.php'); ?>
+  <link rel="stylesheet" href="<?= $appURL ?>/assets/vendor/css/pages/page-auth.css" />
+  <title>
+    <?= $settings['name'] ?> | Login
+  </title>
+</head>
+
+<body>
+  <div class="authentication-wrapper authentication-cover authentication-bg">
+    <div class="authentication-inner row">
+      <div class="d-none d-lg-flex col-lg-7 p-0">
+        <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
+          <img src="<?= $appURL ?>/assets/img/illustrations/auth-login-illustration-light.png" alt="auth-login-cover"
+            class="img-fluid my-5 auth-illustration"
+            data-app-light-img="illustrations/auth-login-illustration-light.png"
+            data-app-dark-img="illustrations/auth-login-illustration-dark.png" />
+          <img src="<?= $appURL ?>/assets/img/illustrations/bg-shape-image-light.png" alt="auth-login-cover"
+            class="platform-bg" data-app-light-img="illustrations/bg-shape-image-light.png"
+            data-app-dark-img="illustrations/bg-shape-image-dark.png" />
+        </div>
+      </div>
+      <div class="d-flex col-12 col-lg-5 align-items-center p-sm-5 p-4">
+        <div class="w-px-400 mx-auto">
+          <h3 class="mb-1 fw-bold">Welcome to
+            <?= $settings['name'] ?>!
+          </h3>
+          <p class="mb-4">Please sign-in to your account and start the adventure</p>
+          <form method="POST">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email"
+                autofocus />
+            </div>
+            <div class="mb-3 form-password-toggle">
+              <div class="d-flex justify-content-between">
+                <label class="form-label" for="password">Password</label>
+                <a href="auth-forgot-password-cover.html">
+                  <small>Forgot Password?</small>
+                </a>
+              </div>
+              <div class="input-group input-group-merge">
+                <input type="password" id="password" class="form-control" name="password"
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="password" />
+                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
               </div>
             </div>
-          </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" />
+                <label class="form-check-label" for="remember-me"> Remember Me </label>
+              </div>
+            </div>
+            <?php
+            if (!$settings['reCAPTCHA_sitekey'] == "") {
+              ?>
+              <center>
+                <div class="g-recaptcha" data-sitekey="<?= $settings['reCAPTCHA_sitekey'] ?>"></div>
+              </center>
+              &nbsp;
+              <?php
+            }
+            ?>
+            <?= $csrf->input('login-form'); ?>
+            <button type="submit" name="login" class="btn btn-primary d-grid w-100">Sign in</button>
+
+          </form>
+          <?php
+          if (isset($_GET['error'])) {
+            ?>
+            <div class="text-center alert alert-danger" role="alert">
+              <?= $_GET['error'] ?>
+            </div>
+            <?php
+          } else {
+
+          }
+          ?>
+          </p>
         </div>
       </div>
     </div>
-    <?php include(__DIR__.'/../ui/footer.php');?>
-   </body>
+  </div>
+  <?php include(__DIR__ . '/../components/footer.php'); ?>
+  <script src="<?= $appURL ?>/assets/js/pages-auth.js"></script>
+</body>
+
 </html>

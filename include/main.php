@@ -33,4 +33,6 @@ $ip_address = getclientip();
 $prot = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
 $svhost = $_SERVER['HTTP_HOST'];
 $appURL = $prot . '://' . $svhost;
+//LOGGER
+include('../functions/writelog.php');
 ?>
