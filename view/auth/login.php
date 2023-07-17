@@ -42,14 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $row = mysqli_fetch_assoc($result);
             $hashedPassword = $row['password'];
             if (password_verify($password, $hashedPassword)) {
-              $token = $row['token'];
+              $token = $row['api_key'];
               $email = $row['email'];
               $cookie_name = 'token';
               $cookie_value = $token;
               setcookie($cookie_name, $cookie_value, time() + (10 * 365 * 24 * 60 * 60), '/');
               writeLog('auth', "The user ($email) logged in.", $conn);
               header('location: /dashboard');
-              exit; // Stop execution after successful login
+               // Stop execution after successful login
             } else {
               writeLog("auth", "Failed to login: 'Invalid Password'", $conn);
               header('location: /auth/login?error=Invalid Password');
@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         mysqli_free_result($result);
         $conn->close();
+        exit;
       }
     } else {
       writeLog("error", "Failed to log user in: 'Login failed'", $conn);

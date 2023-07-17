@@ -2,46 +2,57 @@
 http_response_code(404); 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+
+<html
+  lang="en"
+  class="dark-style customizer-hide"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="<?= $appURL?>/assets/"
+  data-template="vertical-menu-template"
+>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> | 404</title>
-    <link rel="stylesheet" href="<?= $appURL?>/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="<?= $appURL?>/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="<?= $appURL?>/assets/css/style.css">
-    <link rel="shortcut icon" href="" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <?php include(__DIR__ . '/../components/head.php'); ?>
+    <link rel="stylesheet" href="<?= $appURL?>/assets/vendor/css/pages/page-misc.css" />
+    <title><?= $settings['name']?> | Not found</title>
+
   </head>
+
   <body>
-    <div class="container-scroller">
-      <div class="container-fluid page-body-wrapper full-page-wrapper">
-        <div class="content-wrapper d-flex align-items-center text-center error-page bg-primary">
-          <div class="row flex-grow">
-            <div class="col-lg-7 mx-auto text-white">
-              <div class="row align-items-center d-flex flex-row">
-                <div class="col-lg-6 text-lg-right pr-lg-4">
-                  <h1 class="display-1 mb-0">404</h1>
-                </div>
-                <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
-                  <h2>SORRY!</h2>
-                  <h3 class="font-weight-light">The page you’re looking for was not found.</h3>
-                </div>
-              </div>
-              <div class="row mt-5">
-                <div class="col-12 text-center mt-xl-2">
-                  <a class="text-white font-weight-medium" href="/">Back to home</a>
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- Content -->
+
+    <!-- Error -->
+    <div class="container-xxl container-p-y">
+      <div class="misc-wrapper">
+        <h2 class="mb-1 mt-4">Page Not Found :(</h2>
+        <p class="mb-4 mx-2">Oops! 😖 The requested URL was not found on this server.</p>
+        <a href="/" class="btn btn-primary mb-4">Back to home</a>
+        <div class="mt-4">
+          <img
+            src="<?= $appURL?>/assets/img/illustrations/page-misc-error.png"
+            alt="page-misc-error"
+            width="225"
+            class="img-fluid"
+          />
         </div>
       </div>
     </div>
-    <script src="<?= $appURL?>/assets/vendors/js/vendor.bundle.base.js"></script>
-    <script src="<?= $appURL?>/assets/js/off-canvas.js"></script>
-    <script src="<?= $appURL?>/assets/js/hoverable-collapse.js"></script>
-    <script src="<?= $appURL?>/assets/js/misc.js"></script>
-    <script src="<?= $appURL?>/assets/js/settings.js"></script>
-    <script src="<?= $appURL?>/assets/js/todolist.js"></script>
+    <div class="container-fluid misc-bg-wrapper">
+      <img
+        src="<?= $appURL?>/assets/img/illustrations/bg-shape-image-light.png"
+        alt="page-misc-error"
+        data-app-light-img="illustrations/bg-shape-image-light.png"
+        data-app-dark-img="illustrations/bg-shape-image-dark.png"
+      />
+    </div>
+    <?php include(__DIR__ . '/../components/footer.php'); ?>
   </body>
 </html>
+
+
+   
