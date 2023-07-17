@@ -1,3 +1,6 @@
+<?php
+include(__DIR__.'/../../functions/session.php');
+?>
 <!DOCTYPE html>
 
 <html
@@ -34,16 +37,16 @@
                   <div class="nav-align-left">
                     <ul class="nav nav-pills border-0 w-100 gap-1">
                       <li class="nav-item" >
-                        <a href="/help-center/tickets" class="nav-link">Home</a>
+                        <a href="/help-center" class="nav-link">Home</a>
                       </li>
                       <li class="nav-item" >
                         <a href="/help-center/tickets" class="nav-link">Tickets</a>
                       </li>
                       <li class="nav-item">
-                        <button class="nav-link active" data-bs-target="javascript:void(0);">Terms and service</button>
+                        <button class="nav-link active" data-bs-target="javascript:void(0);">Terms of service</button>
                       </li>
                       <li class="nav-item">
-                        <a href="/help-center/tickets" class="nav-link">Privacy Policy</a>
+                        <a href="/help-center/pp" class="nav-link">Privacy Policy</a>
                       </li>
                     </ul>
                   </div>
@@ -62,42 +65,54 @@
                         Terms of Service
                       </h4>
                       <p>
-                        In a professional context it often happens that private or corporate clients corder a
-                        publication to be made and presented with the actual content still not being ready. Think of a
-                        news blog that's filled with content hourly on the day of going live. However, reviewers tend to
-                        be distracted by comprehensible content, say, a random text copied from a newspaper or the
-                        internet. The are likely to focus on the text, disregarding the layout and its elements.
+                        <p class="text-big">Legal Agreements:</p>
+
+                        When we refer to "<?= $settings['name']?>" or use pronouns such as "we", "us" or "our", we mean <?= $settings['name']?>
+                        When we refer to "User", we are talking about you and we will also use words like "you" and "your" to refer to you.
+                        By registering/purchasing services or any activity on our site, you should agree to the <?= $settings['name']?> Terms and Conditions
+                        We reserve the rights to terminate any of your services without notice if they breach any of our Terms And Conditions.
                       </p>
                       <p>
-                        Most of its text is made up from sections 1.10.32–3 of Cicero's De finibus bonorum et malorum
-                        (On the Boundaries of Goods and Evils; finibus may also be translated as purposes). Neque porro
-                        quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit is the first
-                        known version ("Neither is there anyone who loves grief itself since it is grief and thus wants
-                        to obtain it"). It was found by Richard McClintock, a philologist, director of publications at
-                        Hampden-Sydney College in Virginia; he searched for citings of consectetur in classical Latin
-                        literature, a term of remarkably low frequency in that literary corpus.
+                        <p class="text-big"> Accounts:</p>
+
+                        The minimum age to create an account or any activity that requires your personal data is 13 years old! If you are under 13, please contact us and request account deletion.
+                        Your personal data must be real. If not, your services may be suspended and your account banned.
+                        We reserve the right to request your identity card/passport/any document proving your details to verify your account details. If you do not provide it when we ask, your services will be suspended without refund and your account will be banned.
+                        We are not responsible for the security of your account. We recommend that you use a strong password and do not give it to anyone. If your account gets hacked/lost, we can only help you recover it.
+                        We will never sell your personal data.
                       </p>
                       <p>
-                        Cicero famously orated against his political opponent Lucius Sergius Catilina. Occasionally the
-                        first Oration against Catiline is taken for type specimens: Quo usque tandem abutere, Catilina,
-                        patientia nostra? Quam diu etiam furor iste tuus nos eludet? (How long, O Catiline, will you
-                        abuse our patience? And for how long will that madness of yours mock us?)
+                        <p class="text-big"> Support:</p>
+
+                        We are under no obligation to install software / help you code on your site or any service got from <?= $settings['name']?> / other host! We only provide the service, you have to work on it.
+                        We are not responsible for your files.
+                        You are not allowed to SPAM / make jokes / offend our staff or any activity that wastes our time. We may suspend your services and ban your account.
+                        We are not offering support in Discord DM / any other social media, support is only offered through our Website. Any contact in Discord DM or any other social media will be ignored, further insistence will get you banned and your services suspended.
+                        You may not lie or slander <?= $settings['name']?>! You risk having our services suspended.
                       </p>
+                      <p>
+                        <p class="text-big"> Service Activity:</p>
+
+                        You are not allowed to use our servers for illegal purposes like DDoS, mining etc. Your server will be suspended!
+                        We are not required to install software (Pterodactyl, GameCP, etc.) on your server. We only offer you the service. You have to work at it.
+                        You may not use our web hosting services or any hosting services to sell people/children/weapons/copyrighted content or any illegal activity. You will get your services suspended!
+                        We are under no obligation to help you code your site!
+                        Resource intensive users will not be supported in any form (eg: p2p communities - torrent trackers, file hosting sites, image hosting sites, site statistics installations (above), game statistics, installations external counters (redirecting players, etc.) will be suspended without refund!
+                        You may not disrupt the services of other customers. You risk having your services suspended and your account banned!
+                        We are not responsible for your website downtime. We will always let you know if there is a problem.
+                        We reserve the right to adapt the hardware and software used to provide the services to the current state of the art and to inform you in good time of any additional requirements that may arise from this for the content you have stored on our servers. We undertake to make such adjustments only to a reasonable extent and taking your interests into account.
+                        You are not allowed to resell our products, if you do so your service will be suspended without refund.
+                      </p>
+                      <p>
+                        <p class="text-big"> Data:</p>
+
+                        We are not responsible for any backup/file or any data loss. You are responsible for backups and expired, suspended, canceled, refunded, prohibited services.
+                        We will never sell your personal data.
+                      </p>
+                      
                       <hr class="container-m-nx my-4" />
                       <div class="d-flex justify-content-between flex-wrap gap-3 mb-3">
-                        <div class="article-info">
-                          <h5 class="mb-1">Did you find this article helpful?</h5>
-                          <p class="card-text">55 People found this helpful</p>
-                        </div>
-                        <h5>Still need help? <a href="javascript:void(0);">Contact us?</a></h5>
-                      </div>
-                      <div class="article-votes">
-                        <a href="javascript:void(0);" class="badge bg-label-primary me-2 p-2"
-                          ><i class="ti ti-thumb-up ti-xs"></i
-                        ></a>
-                        <a href="javascript:void(0);" class="badge bg-label-primary p-2"
-                          ><i class="ti ti-thumb-down ti-xs"></i
-                        ></a>
+                        <h5>Still need help? <a href="/help-center/tickets">Contact us?</a></h5>
                       </div>
                     </div>
                   </div>

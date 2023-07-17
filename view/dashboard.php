@@ -1,3 +1,6 @@
+<?php 
+include(__DIR__.'/../functions/session.php');
+?>
 <!DOCTYPE html>
 
 <html
