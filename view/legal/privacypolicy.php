@@ -7,7 +7,7 @@ include(__DIR__.'/../../functions/session.php');
   lang="en"
   class="dark-style layout-navbar-fixed layout-menu-fixed"
   dir="ltr"
-  data-theme="theme-default"
+  data-theme="theme-semi-dark"
   data-assets-path="<?= $appURL ?>/assets/"
   data-template="vertical-menu-template"
 >

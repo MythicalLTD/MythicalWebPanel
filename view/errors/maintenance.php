@@ -4,7 +4,7 @@
   lang="en"
   class="dark-style customizer-hide"
   dir="ltr"
-  data-theme="theme-default"
+  data-theme="theme-semi-dark"
   data-assets-path="<?= $appURL?>/assets/"
   data-template="vertical-menu-template"
 >

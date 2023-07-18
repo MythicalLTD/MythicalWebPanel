@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 ?>
-<html lang="en" class="dark-style customizer-hide" dir="ltr" data-theme="theme-default"
+<html lang="en" class="dark-style customizer-hide" dir="ltr" data-theme="theme-semi-dark"
   data-assets-path="<?= $appURL ?>/assets/" data-template="horizontal-menu-template">
 
 <head>
