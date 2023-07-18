@@ -35,4 +35,5 @@ $svhost = $_SERVER['HTTP_HOST'];
 $appURL = $prot . '://' . $svhost;
 //LOGGER
 include('../functions/writelog.php');
-?>
+// GET CURRENT PATH
+$current_path = $_SERVER['REQUEST_URI'];?>
