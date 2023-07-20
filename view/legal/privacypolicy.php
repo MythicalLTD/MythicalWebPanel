@@ -1,5 +1,5 @@
 <?php
-include(__DIR__.'/../../functions/session.php');
+include(__DIR__.'/../requirements/page.php');
 ?>
 <!DOCTYPE html>
 
