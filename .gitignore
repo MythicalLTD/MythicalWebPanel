@@ -7,3 +7,4 @@ core/storage/*
 /.idea
 logs/*.log
 /public/pma/tmp/twig/
+/config.yml
