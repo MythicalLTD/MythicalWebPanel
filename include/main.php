@@ -22,6 +22,8 @@ else
     ini_set('display_errors', 0);
     ini_set('display_startup_errors', 0);
 }
+//DATA Encyption
+include('../functions/base64.php');
 //DATABASE CONNECTION
 include('dbconn.php');
 //SETTINGS TABLE
@@ -36,4 +38,5 @@ $appURL = $prot . '://' . $svhost;
 //LOGGER
 include('../functions/writelog.php');
 // GET CURRENT PATH
-$current_path = $_SERVER['REQUEST_URI'];?>
+$current_path = $_SERVER['REQUEST_URI'];
+?>

@@ -24,3 +24,25 @@ https://paypal.me/mythicalsystems
 You can join our support server:
 
 https://discord.gg/7BZTmSK2D8
+
+## DOCS
+Here you will find the stuff that we will have to add in our docs:
+
+### Create a new user:
+Use the following command to create a new user.
+```bash
+sudo adduser mythicalsystems
+```
+### Add the user to the sudo group:
+The sudo group allows users to run commands with administrative privileges.
+```bash
+sudo usermod -aG sudo mythicalsystems
+```
+### Edit the sudoers file:
+The sudoers file is the configuration file for controlling sudo privileges. We'll use the `visudo` command to safely edit it:
+
+### Allow passwordless sudo for the new user:
+Inside the sudoers file, add the following line at the end of the file:
+```bash
+mythicalsystems ALL=(ALL) NOPASSWD: ALL
+```

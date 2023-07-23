@@ -8,3 +8,9 @@ database:
   username: MythicalSystems # DEFAULT: MythicalSystems | MYSQL_USERNAME
   password: '<password>' # DEFAULT: <password> | MYSQL_PASSWORD
   database: mythicalwebpanel # DEFAULT: mythicalwebpanel | MYSQL_DATABASE_NAME
+
+ssh:
+  host: 127.0.0.1 # The host machine where you want to host the webpanel
+  port: 22 # The port where you have the ssh server
+  user: mythicalsystems # The username for ssh do not use root please 
+  password: 'test' # The password for the ssh user 
