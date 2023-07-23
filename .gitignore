@@ -6,5 +6,5 @@ core/storage/*
 /vendor
 /.idea
 logs/*.log
-/public/pma/tmp/twig/
 /config.yml
+/public/pma/
