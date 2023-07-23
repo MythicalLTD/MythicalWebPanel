@@ -56,7 +56,12 @@ $router->add("/admin/users/view",function () {
 
 $router->add("/admin/users/edit",function () {
     require("../include/main.php");
-    require("../view/admin/users/view_edit_user.php");
+    require("../view/admin/users/edit_user.php");
+});
+
+$router->add("/admin/users/new",function () {
+    require("../include/main.php");
+    require("../view/admin/users/new_user.php");
 });
 
 $router->add("/admin/users/delete",function () {

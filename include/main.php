@@ -39,4 +39,9 @@ $appURL = $prot . '://' . $svhost;
 include('../functions/writelog.php');
 // GET CURRENT PATH
 $current_path = $_SERVER['REQUEST_URI'];
+//PASSWORD GENERATOR
+include('../functions/passwordgen.php');
+//KEY GENERATOR
+include('../functions/keygen.php');
+
 ?>

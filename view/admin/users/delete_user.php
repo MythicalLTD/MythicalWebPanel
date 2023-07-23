@@ -12,6 +12,8 @@ if (isset($_GET['id'])) {
                 header('location: /admin/users/view?e=Can`t delete your own account');
                 exit();
             }
+            $conn->query('DELETE FROM `mythicalwebpanel_users` WHERE `mythicalwebpanel_users`.`id` = '.$_GET['id'].';');
+            header('location: /admin/users/view');
         } else {
             header('location: /admin/users/view?e=Can`t find this user in the database');
             exit();

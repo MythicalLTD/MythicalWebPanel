@@ -16,15 +16,41 @@ if (isset($_GET['edit_user'])) {
             $lastName = mysqli_real_escape_string($conn, $_GET['lastName']);
             $email = mysqli_real_escape_string($conn, $_GET['email']);
             $avatar = mysqli_real_escape_string($conn, $_GET['avatar']);
-            $skey = mysqli_real_escape_string($conn, $_GET['skey']);
-            $conn->query("UPDATE `mythicalwebpanel_users` SET `username` = '" . $username . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
-            $conn->query("UPDATE `mythicalwebpanel_users` SET `first_name` = '" . $firstName . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
-            $conn->query("UPDATE `mythicalwebpanel_users` SET `last_name` = '" . $lastName . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
-            $conn->query("UPDATE `mythicalwebpanel_users` SET `api_key` = '" . $skey . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
-            $conn->query("UPDATE `mythicalwebpanel_users` SET `avatar` = '" . $avatar . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
-            $conn->query("UPDATE `mythicalwebpanel_users` SET `email` = '" . $email . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
-            $conn->close();
-            header('location: /admin/users/edit?id='.$_GET['id']);
+            $role = mysqli_real_escape_string($conn, $_GET['role']);
+            if (!$username == "" || $firstName == "" || $lastName == "" || $email == "" || $avatar == "" || $role == "") {
+                if (!$user_info['username'] == $username || !$email == $user_info['email']) 
+                {
+                    $check_query = "SELECT * FROM mythicalwebpanel_users WHERE username = '$username' OR email = '$email'";
+                    $result = mysqli_query($conn, $check_query);
+                    if (mysqli_num_rows($result) > 0) {
+                        header('location: /admin/users/edit?e=Username or email already exists. Please choose a different one&id='.$_GET['id']);
+                        exit();
+                    }
+                }
+                else
+                {
+                    if ($role == "Admin") {
+                        $conn->query("UPDATE `mythicalwebpanel_users` SET `role` = 'Administrator' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    } else if ($role == "User") {
+                        $conn->query("UPDATE `mythicalwebpanel_users` SET `role` = 'User' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    }
+                    else
+                    {
+                        $conn->query("UPDATE `mythicalwebpanel_users` SET `role` = 'User' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    }
+                    $conn->query("UPDATE `mythicalwebpanel_users` SET `username` = '" . $username . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    $conn->query("UPDATE `mythicalwebpanel_users` SET `first_name` = '" . $firstName . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    $conn->query("UPDATE `mythicalwebpanel_users` SET `last_name` = '" . $lastName . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    $conn->query("UPDATE `mythicalwebpanel_users` SET `avatar` = '" . $avatar . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    $conn->query("UPDATE `mythicalwebpanel_users` SET `email` = '" . $email . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
+                    $conn->close();
+                    header('location: /admin/users/edit?id='.$_GET['id'].'&s=We updated the user settings in the database');
+                }
+            }
+            else {
+                header('location: /admin/users/edit?e=Please fill in all the info&id='.$_GET['id']);
+                exit();
+            }
         } else {
             header('location: /admin/users/view?e=Can`t find this user in the database');
             exit();
@@ -33,7 +59,9 @@ if (isset($_GET['edit_user'])) {
         header('location: /admin/users/view?e=Can`t find this user in the database');
         exit();
     }
-} else if (isset($_GET['id'])) {
+} 
+else if (isset($_GET['id']))
+{
     if (!$_GET['id'] == "") {
         $user_query = "SELECT * FROM mythicalwebpanel_users WHERE id = ?";
         $stmt = mysqli_prepare($conn, $user_query);
@@ -74,9 +102,27 @@ if (isset($_GET['edit_user'])) {
                 <?php include(__DIR__ . '/../../components/navbar.php') ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin / Users /</span>
-                            Edit</h4>
-
+                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin / Users /</span> Edit</h4>
+                        <?php
+                        if (isset($_GET['e'])) {
+                            ?>
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <?= $_GET['e'] ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['s'])) {
+                            ?>
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <?= $_GET['s'] ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php
+                        }
+                        ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="nav nav-pills flex-column flex-md-row mb-4">
@@ -125,6 +171,26 @@ if (isset($_GET['edit_user'])) {
                                                         placeholder="jhondoe" />
                                                 </div>
                                                 <div class="mb-3 col-md-6">
+                                                    <label for="role" class="form-label">Role</label>
+                                                    <select id="role" name="role" class="select2 form-select">
+                                                        <?php 
+                                                        if ($user_info['role'] == "Administrator") {
+                                                            ?>
+                                                            <option value="Admin">Administrator</option>
+                                                            <option value="User">User</option>
+                                                            <?php
+                                                        }
+                                                        else
+                                                        {
+                                                            ?>
+                                                            <option value="User">User</option>
+                                                            <option value="Admin">Administrator</option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-md-6">
                                                     <label for="firstName" class="form-label">First Name</label>
                                                     <input class="form-control" type="text" id="firstName"
                                                         name="firstName" value="<?= $user_info['first_name'] ?>"
@@ -137,7 +203,7 @@ if (isset($_GET['edit_user'])) {
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="email" class="form-label">E-mail</label>
-                                                    <input class="form-control" type="text" id="email" name="email"
+                                                    <input class="form-control" type="email" id="email" name="email"
                                                         value="<?= $user_info['email'] ?>"
                                                         placeholder="john.doe@example.com" />
                                                 </div>
@@ -145,15 +211,6 @@ if (isset($_GET['edit_user'])) {
                                                     <label for="avatar" class="form-label">Avatar</label>
                                                     <input class="form-control" type="text" id="avatar" name="avatar"
                                                         value="<?= $user_info['avatar'] ?>" />
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="skey" class="form-label">Secret Key</label>
-                                                    <input class="form-control" type="text" id="skey" <?php
-                                                    if ($_COOKIE['token'] == $user_info['api_key']) {
-                                                        ?> readonly="true"
-                                                        <?php
-                                                    }
-                                                    ?> name="skey" value="<?= $user_info['api_key'] ?>" />
                                                 </div>
                                                 <input class="form-control" type="hidden" id="id" name="id" value="<?= $_GET['id']?>">
 

@@ -43,7 +43,7 @@ function is_active_page($page_urls)
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Administration Tools</span>
       </li>
-      <li class="menu-item <?php echo is_active_page(['/admin/users/view', '/admin/users/edit']) ? 'active' : ''; ?>">
+      <li class="menu-item <?php echo is_active_page(['/admin/users/view', '/admin/users/edit','/admin/users/new']) ? 'active' : ''; ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons ti ti-users"></i>
           <div>Users</div>
@@ -52,6 +52,11 @@ function is_active_page($page_urls)
           <li class="menu-item <?php echo is_active_page(['/admin/users/view']) ? 'active' : ''; ?>">
             <a href="/admin/users/view" class="menu-link">
               <div>List</div>
+            </a>
+          </li>
+          <li class="menu-item <?php echo is_active_page(['/admin/users/new']) ? 'active' : ''; ?>">
+            <a href="/admin/users/new" class="menu-link">
+              <div>New</div>
             </a>
           </li>
         </ul>
