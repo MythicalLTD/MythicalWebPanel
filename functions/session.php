@@ -24,6 +24,7 @@ if (isset($_COOKIE['token'])) {
         }
       }
       echo '<script>window.location.replace("/auth/login");</script>';
+      exit();
   }
 }
 else
@@ -38,5 +39,6 @@ else
     }
   }
   header('location: /auth/login');
+  exit();
 }
 ?>

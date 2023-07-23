@@ -51,7 +51,17 @@ $router->add("/e/404", function () {
 
 $router->add("/admin/users/view",function () {
     require("../include/main.php");
-    require("../view/admin/view_users.php");
+    require("../view/admin/users/view_users.php");
+});
+
+$router->add("/admin/users/edit",function () {
+    require("../include/main.php");
+    require("../view/admin/users/view_edit_user.php");
+});
+
+$router->add("/admin/users/delete",function () {
+    require("../include/main.php");
+    require("../view/admin/users/delete_user.php");
 });
 
 $router->add("/e/401", function () {

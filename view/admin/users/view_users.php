@@ -1,10 +1,8 @@
 <?php
-include(__DIR__ . '/../requirements/page.php');
-if ($userdb['role'] == "User") {
-    header('location: /');
-}
+include(__DIR__ . '/../../requirements/page.php');
+include(__DIR__ . '/../../requirements/admin.php');
 $usersPerPage = 50;
-$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $usersPerPage;
 
 $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
@@ -25,24 +23,42 @@ $totalPages = ceil($totalUsers / $usersPerPage);
     data-assets-path="<?= $appURL ?>/assets/" data-template="vertical-menu-template">
 
 <head>
-    <?php include(__DIR__ . '/../requirements/head.php'); ?>
+    <?php include(__DIR__ . '/../../requirements/head.php'); ?>
     <title>
         <?= $settings['name'] ?> | Users
     </title>
+    <style>
+        .avatar-image {
+            width: 30px; /* Adjust the size as needed */
+            height: 30px; /* Adjust the size as needed */
+            border-radius: 50%;
+        }
+    </style>
 </head>
 
 <body>
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <?php include(__DIR__ . '/../components/sidebar.php') ?>
+            <?php include(__DIR__ . '/../../components/sidebar.php') ?>
             <div class="layout-page">
-                <?php include(__DIR__ . '/../components/navbar.php') ?>
+                <?php include(__DIR__ . '/../../components/navbar.php') ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
+                        <?php
+                        if (isset($_GET['e'])) {
+                            ?>
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <?= $_GET['e'] ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php
+                        }
+                        ?>
                         <!-- Search Form -->
                         <form class="mt-4">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Search users..." name="search" value="<?= $searchKeyword ?>">
+                                <input type="text" class="form-control" placeholder="Search users..." name="search"
+                                    value="<?= $searchKeyword ?>">
                                 <button class="btn btn-outline-secondary" type="submit">Search</button>
                             </div>
                         </form>
@@ -53,7 +69,7 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>Avatar</th>
                                             <th>Username</th>
                                             <th>Email</th>
                                             <th>Role</th>
@@ -66,12 +82,12 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr>";
-                                                echo "<td>" . $row['id'] . "</td>";
+                                                echo "<td><img src='" . $row['avatar'] . "' alt='Avatar' class='rounded-circle avatar-image'></td>";
                                                 echo "<td>" . $row['username'] . "</td>";
                                                 echo "<td>" . $row['email'] . "</td>";
                                                 echo "<td>" . $row['role'] . "</td>";
                                                 echo "<td>" . $row['last_login'] . "</td>";
-                                                echo "<td><a href=\"/admin/users/edit?id=" . $row['id'] . "\" class=\"btn btn-primary\">Edit</a></td>";
+                                                echo "<td><a href=\"/admin/users/edit?id=" . $row['id'] . "\" class=\"btn btn-primary\">Edit</a>&nbsp;<a href=\"/admin/users/delete?id=" . $row['id'] . "\" class=\"btn btn-danger\">Delete</a></td>";
                                                 echo "</tr>";
                                             }
                                         } else {
@@ -92,7 +108,7 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                             </ul>
                         </nav>
                     </div>
-                    <?php include(__DIR__ . '/../components/footer.php') ?>
+                    <?php include(__DIR__ . '/../../components/footer.php') ?>
                     <div class="content-backdrop fade"></div>
                 </div>
             </div>
@@ -100,7 +116,7 @@ $totalPages = ceil($totalUsers / $usersPerPage);
         <div class="layout-overlay layout-menu-toggle"></div>
         <div class="drag-target"></div>
     </div>
-    <?php include(__DIR__ . '/../requirements/footer.php') ?>
+    <?php include(__DIR__ . '/../../requirements/footer.php') ?>
     <script src="<?= $appURL ?>/assets/js/app-user-list.js"></script>
 </body>
 

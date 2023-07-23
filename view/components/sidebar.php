@@ -43,13 +43,13 @@ function is_active_page($page_urls)
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Administration Tools</span>
       </li>
-      <li class="menu-item <?php echo is_active_page(['/admin/users/view']) ? 'active' : ''; ?>">
+      <li class="menu-item <?php echo is_active_page(['/admin/users/view', '/admin/users/edit']) ? 'active' : ''; ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons ti ti-users"></i>
           <div>Users</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item <?php echo is_active_page('/admin/users/view') ? 'active' : ''; ?>">
+          <li class="menu-item <?php echo is_active_page(['/admin/users/view']) ? 'active' : ''; ?>">
             <a href="/admin/users/view" class="menu-link">
               <div>List</div>
             </a>
