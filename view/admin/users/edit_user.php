@@ -122,10 +122,6 @@ if (isset($_GET['edit_user'])) {
                                         <a href="/admin/users/edit?id=<?= $_GET['id'] ?>" class="nav-link active"><i
                                                 class="ti-xs ti ti-users me-1"></i> Account</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/users/edit/security?id=<?= $_GET['id'] ?>"><i
-                                                class="ti-xs ti ti-lock me-1"></i> Security</a>
-                                    </li>
                                     <!--<li class="nav-item">
                       <a class="nav-link" href="pages-account-settings-billing.html"
                         ><i class="ti-xs ti ti-file-description me-1"></i> Billing & Plans</a
@@ -224,9 +220,9 @@ if (isset($_GET['edit_user'])) {
                                                     be certain.</p>
                                             </div>
                                         </div>
-                                        <a href="/admin/users/delete?id=<?= $_GET['id'] ?>"
-                                            class="btn btn-danger deactivate-account">Reset Password</a>
-                                        <button type="button"data-bs-toggle="modal" data-bs-target="#resetKey"
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#resetPwd"
+                                            class="btn btn-danger deactivate-account">Reset Password</button>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#resetKey"
                                             class="btn btn-danger deactivate-account">Reset Secret Key</button>
                                         <a href="/admin/users/delete?id=<?= $_GET['id'] ?>"
                                             class="btn btn-danger deactivate-account">Delete Account</a>
@@ -243,12 +239,41 @@ if (isset($_GET['edit_user'])) {
                                         aria-label="Close"></button>
                                     <div class="text-center mb-4">
                                         <h3 class="mb-2">Reset user secret key?</h3>
-                                        <p class="text-muted">After updating the key, the user will have to login again.</p>
+                                        <p class="text-muted">After updating the key, the user will have to login again.
+                                        </p>
                                     </div>
                                     <form method="GET" action="/admin/users/security/resetkey" class="row g-3">
                                         <div class="col-12 text-center">
-                                            <button type="submit" name="id" value="<?= $_GET['id']?>" class="btn btn-danger me-sm-3 me-1">Reset key</button>
-                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel </button>
+                                            <button type="submit" name="id" value="<?= $_GET['id'] ?>"
+                                                class="btn btn-danger me-sm-3 me-1">Reset key</button>
+                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                aria-label="Close">Cancel </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="resetPwd" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                            <div class="modal-content p-3 p-md-5">
+                                <div class="modal-body">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                    <div class="text-center mb-4">
+                                        <h3 class="mb-2">Reset user password?</h3>
+                                        <p class="text-muted">After updating the key, the user will stay logged in!!</p>
+                                    </div>
+                                    <form method="GET" action="/admin/users/security/resetpwd" class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label" for="resetPwd">New Password</label>
+                                            <input type="password" id="pwd" name="pwd" class="form-control" placeholder="" required/>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <button type="submit" name="id" value="<?= $_GET['id'] ?>"
+                                                class="btn btn-danger me-sm-3 me-1">Reset password</button>
+                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                aria-label="Close">Cancel </button>
                                         </div>
                                     </form>
                                 </div>
