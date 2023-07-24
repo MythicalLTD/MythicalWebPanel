@@ -220,13 +220,33 @@ if (isset($_GET['edit_user'])) {
                                                     be certain.</p>
                                             </div>
                                         </div>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#resetPwd"
-                                            class="btn btn-danger deactivate-account">Reset Password</button>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#resetKey"
-                                            class="btn btn-danger deactivate-account">Reset Secret Key</button>
-                                        <a href="/admin/users/delete?id=<?= $_GET['id'] ?>"
-                                            class="btn btn-danger deactivate-account">Delete Account</a>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#resetPwd" class="btn btn-danger deactivate-account">Reset Password</button>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#resetKey" class="btn btn-danger deactivate-account">Reset Secret Key</button>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteacc" class="btn btn-danger deactivate-account">Delete Account</button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="deleteacc" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                            <div class="modal-content p-3 p-md-5">
+                                <div class="modal-body">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                    <div class="text-center mb-4">
+                                        <h3 class="mb-2">Delete this user?</h3>
+                                        <p class="text-muted">When you choose to delete this user, please be aware that all associated user data will be permanently wiped. This action is irreversible, so proceed with caution!
+                                        </p>
+                                    </div>
+                                    <form method="GET" action="/admin/users/delete" class="row g-3">
+                                        <div class="col-12 text-center">
+                                            <button type="submit" name="id" value="<?= $_GET['id'] ?>"
+                                                class="btn btn-danger me-sm-3 me-1">Delete user</button>
+                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                aria-label="Close">Cancel </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
