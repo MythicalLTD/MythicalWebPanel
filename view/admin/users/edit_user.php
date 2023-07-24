@@ -18,24 +18,19 @@ if (isset($_GET['edit_user'])) {
             $avatar = mysqli_real_escape_string($conn, $_GET['avatar']);
             $role = mysqli_real_escape_string($conn, $_GET['role']);
             if (!$username == "" || $firstName == "" || $lastName == "" || $email == "" || $avatar == "" || $role == "") {
-                if (!$user_info['username'] == $username || !$email == $user_info['email']) 
-                {
+                if (!$user_info['username'] == $username || !$email == $user_info['email']) {
                     $check_query = "SELECT * FROM mythicalwebpanel_users WHERE username = '$username' OR email = '$email'";
                     $result = mysqli_query($conn, $check_query);
                     if (mysqli_num_rows($result) > 0) {
-                        header('location: /admin/users/edit?e=Username or email already exists. Please choose a different one&id='.$_GET['id']);
+                        header('location: /admin/users/edit?e=Username or email already exists. Please choose a different one&id=' . $_GET['id']);
                         exit();
                     }
-                }
-                else
-                {
+                } else {
                     if ($role == "Admin") {
                         $conn->query("UPDATE `mythicalwebpanel_users` SET `role` = 'Administrator' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
                     } else if ($role == "User") {
                         $conn->query("UPDATE `mythicalwebpanel_users` SET `role` = 'User' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
-                    }
-                    else
-                    {
+                    } else {
                         $conn->query("UPDATE `mythicalwebpanel_users` SET `role` = 'User' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
                     }
                     $conn->query("UPDATE `mythicalwebpanel_users` SET `username` = '" . $username . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
@@ -44,11 +39,10 @@ if (isset($_GET['edit_user'])) {
                     $conn->query("UPDATE `mythicalwebpanel_users` SET `avatar` = '" . $avatar . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
                     $conn->query("UPDATE `mythicalwebpanel_users` SET `email` = '" . $email . "' WHERE `mythicalwebpanel_users`.`id` = " . $_GET['id'] . ";");
                     $conn->close();
-                    header('location: /admin/users/edit?id='.$_GET['id'].'&s=We updated the user settings in the database');
+                    header('location: /admin/users/edit?id=' . $_GET['id'] . '&s=We updated the user settings in the database');
                 }
-            }
-            else {
-                header('location: /admin/users/edit?e=Please fill in all the info&id='.$_GET['id']);
+            } else {
+                header('location: /admin/users/edit?e=Please fill in all the info&id=' . $_GET['id']);
                 exit();
             }
         } else {
@@ -59,9 +53,7 @@ if (isset($_GET['edit_user'])) {
         header('location: /admin/users/view?e=Can`t find this user in the database');
         exit();
     }
-} 
-else if (isset($_GET['id']))
-{
+} else if (isset($_GET['id'])) {
     if (!$_GET['id'] == "") {
         $user_query = "SELECT * FROM mythicalwebpanel_users WHERE id = ?";
         $stmt = mysqli_prepare($conn, $user_query);
@@ -131,8 +123,7 @@ else if (isset($_GET['id']))
                                                 class="ti-xs ti ti-users me-1"></i> Account</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link"
-                                            href="/admin/users/edit?tab=security&id=<?= $_GET['id'] ?>"><i
+                                        <a class="nav-link" href="/admin/users/edit/security?id=<?= $_GET['id'] ?>"><i
                                                 class="ti-xs ti ti-lock me-1"></i> Security</a>
                                     </li>
                                     <!--<li class="nav-item">
@@ -173,15 +164,13 @@ else if (isset($_GET['id']))
                                                 <div class="mb-3 col-md-6">
                                                     <label for="role" class="form-label">Role</label>
                                                     <select id="role" name="role" class="select2 form-select">
-                                                        <?php 
+                                                        <?php
                                                         if ($user_info['role'] == "Administrator") {
                                                             ?>
                                                             <option value="Admin">Administrator</option>
                                                             <option value="User">User</option>
                                                             <?php
-                                                        }
-                                                        else
-                                                        {
+                                                        } else {
                                                             ?>
                                                             <option value="User">User</option>
                                                             <option value="Admin">Administrator</option>
@@ -212,30 +201,56 @@ else if (isset($_GET['id']))
                                                     <input class="form-control" type="text" id="avatar" name="avatar"
                                                         value="<?= $user_info['avatar'] ?>" />
                                                 </div>
-                                                <input class="form-control" type="hidden" id="id" name="id" value="<?= $_GET['id']?>">
+                                                <input class="form-control" type="hidden" id="id" name="id"
+                                                    value="<?= $_GET['id'] ?>">
 
                                             </div>
                                             <div class="mt-2">
-                                                <button type="submit" name="edit_user" class="btn btn-primary me-2" value="true">Save changes</button>
+                                                <button type="submit" name="edit_user" class="btn btn-primary me-2"
+                                                    value="true">Save changes</button>
                                                 <a href="/admin/users/view" class="btn btn-label-secondary">Cancel</a>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                                 <div class="card">
-                                    <h5 class="card-header">Delete Account</h5>
+                                    <h5 class="card-header">Danger Zone</h5>
                                     <div class="card-body">
                                         <div class="mb-3 col-12 mb-0">
                                             <div class="alert alert-warning">
-                                                <h5 class="alert-heading mb-1">Are you sure you want to this account?
+                                                <h5 class="alert-heading mb-1">Make sure you read what the button does!
                                                 </h5>
-                                                <p class="mb-0">Once you delete this account, there is no going back.
-                                                    Please be certain.</p>
+                                                <p class="mb-0">Once you press a button, there is no going back. Please
+                                                    be certain.</p>
                                             </div>
                                         </div>
                                         <a href="/admin/users/delete?id=<?= $_GET['id'] ?>"
-                                            class="btn btn-danger deactivate-account">Deactivate Account</a>
+                                            class="btn btn-danger deactivate-account">Reset Password</a>
+                                        <button type="button"data-bs-toggle="modal" data-bs-target="#resetKey"
+                                            class="btn btn-danger deactivate-account">Reset Secret Key</button>
+                                        <a href="/admin/users/delete?id=<?= $_GET['id'] ?>"
+                                            class="btn btn-danger deactivate-account">Delete Account</a>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="resetKey" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                            <div class="modal-content p-3 p-md-5">
+                                <div class="modal-body">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                    <div class="text-center mb-4">
+                                        <h3 class="mb-2">Reset user secret key?</h3>
+                                        <p class="text-muted">After updating the key, the user will have to login again.</p>
+                                    </div>
+                                    <form method="GET" action="/admin/users/security/resetkey" class="row g-3">
+                                        <div class="col-12 text-center">
+                                            <button type="submit" name="id" value="<?= $_GET['id']?>" class="btn btn-danger me-sm-3 me-1">Reset key</button>
+                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -250,7 +265,7 @@ else if (isset($_GET['id']))
     </div>
     <?php include(__DIR__ . '/../../requirements/footer.php') ?>
     <!-- Page JS -->
-    <script src="../../assets/js/pages-account-settings-account.js"></script>
+    <script src="<?= $appURL ?>/assets/js/pages-account-settings-account.js"></script>
 </body>
 
 </html>

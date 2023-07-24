@@ -69,6 +69,11 @@ $router->add("/admin/users/delete",function () {
     require("../view/admin/users/delete_user.php");
 });
 
+$router->add("/admin/users/security/resetkey",function() {
+    require("../include/main.php");
+    require("../view/admin/users/user_reset_key.php");
+});
+
 $router->add("/e/401", function () {
     require("../include/main.php");
     require("../view/errors/401.php");
