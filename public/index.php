@@ -49,6 +49,31 @@ $router->add("/e/404", function () {
     require("../view/errors/404.php");
 });
 
+$router->add("/user/profile",function () {
+    require("../include/main.php");
+    require("../view/user/profile.php");
+});
+
+$router->add("/user/security/delete_account",function () {
+    require("../include/main.php");
+    require("../view/user/deleteacc.php");
+});
+
+$router->add("/user/security/resetkey",function () {
+    require("../include/main.php");
+    require("../view/user/resetkey.php");
+});
+
+$router->add("/user/security/resetpwd",function () {
+    require("../include/main.php");
+    require("../view/user/resetpwd.php");
+});
+
+$router->add("/blank",function () {
+    require("../include/main.php");
+    require("../view/blank.php");
+});
+
 $router->add("/admin/users/view",function () {
     require("../include/main.php");
     require("../view/admin/users/view_users.php");

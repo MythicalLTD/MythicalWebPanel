@@ -90,13 +90,13 @@
             <div class="dropdown-divider"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="user/profile">
+            <a class="dropdown-item" href="/user/profile">
               <i class="ti ti-user-check me-2 ti-sm"></i>
               <span class="align-middle">My Profile</span>
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="user/api">
+            <a class="dropdown-item" href="/user/api">
               <i class="ti ti-key me-2 ti-sm"></i>
               <span class="align-middle">API Keys</span>
             </a>
@@ -105,7 +105,7 @@
             <div class="dropdown-divider"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="help-center/">
+            <a class="dropdown-item" href="/help-center/">
               <i class="ti ti-lifebuoy me-2 ti-sm"></i>
               <span class="align-middle">Help</span>
             </a>

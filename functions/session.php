@@ -1,4 +1,9 @@
 <?php 
+$fullUrl = "http";
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) {
+    $fullUrl .= "s";
+}
+$fullUrl .= "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 if (isset($_COOKIE['token'])) {
   $session_id = $_COOKIE['token'];
   $query = "SELECT * FROM mythicalwebpanel_users WHERE api_key='".$session_id."'";
@@ -23,7 +28,7 @@ if (isset($_COOKIE['token'])) {
             setcookie($name, '', time()-1000, '/');
         }
       }
-      echo '<script>window.location.replace("/auth/login");</script>';
+      echo '<script>window.location.replace("/auth/login?r='.$fullUrl.'");</script>';
       exit();
   }
 }
@@ -38,7 +43,7 @@ else
         setcookie($name, '', time()-1000, '/');
     }
   }
-  header('location: /auth/login');
+  header('location: /auth/login?r='.$fullUrl);
   exit();
 }
 ?>

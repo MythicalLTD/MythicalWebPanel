@@ -1,4 +1,7 @@
 <?php
+include(__DIR__ . '/../../requirements/page.php');
+include(__DIR__ . '/../../requirements/admin.php');
+
 if (isset($_GET['id'])) {
     if (!$_GET['id'] == "") {
         $user_query = "SELECT * FROM mythicalwebpanel_users WHERE id = ?";
@@ -13,7 +16,7 @@ if (isset($_GET['id'])) {
                 exit();
             }
             $conn->query('DELETE FROM `mythicalwebpanel_users` WHERE `mythicalwebpanel_users`.`id` = '.$_GET['id'].';');
-            header('location: /admin/users/edit?id='.$_GET['id'].'&s=We updated the user settings in the database');
+            header('location: /admin/users/view?s=We updated the user settings in the database');
         } else {
             header('location: /admin/users/view?e=Can`t find this user in the database');
             exit();

@@ -48,7 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               $cookie_value = $token;
               setcookie($cookie_name, $cookie_value, time() + (10 * 365 * 24 * 60 * 60), '/');
               writeLog('auth', "The user ($email) logged in.", $conn);
-              header('location: /dashboard');
+              if (isset($_GET['r'])) {
+                header('location: '.$_GET['r']);
+              }
+              else
+              {
+                header('location: /dashboard');
+              }
                // Stop execution after successful login
             } else {
               writeLog("auth", "Failed to login: 'Invalid Password'", $conn);
